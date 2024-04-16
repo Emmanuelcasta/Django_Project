@@ -1,15 +1,10 @@
-from typing import Any
-from django.shortcuts import render
-from django.views.generic import TemplateView # new
-from django.http import HttpResponse    # new
-
-# Create your views here.
+from django.views.generic import TemplateView
 
 class HomePageView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'pages/home.html'
 
 class AboutPageView(TemplateView):
-    template_name = 'about.html'
+    template_name = 'pages/about.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -19,11 +14,10 @@ class AboutPageView(TemplateView):
             "description": "This is an about page ...",
             "author": "Developed by: Your Name",
         })
-
         return context
 
 class ContactPageView(TemplateView):
-    template_name = 'contact.html'
+    template_name = 'pages/contact.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -33,5 +27,4 @@ class ContactPageView(TemplateView):
             "description": "This is a contact page ...",
             "author": "Developed by: Your Name",
         })
-
         return context
