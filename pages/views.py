@@ -1,7 +1,7 @@
 from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView # new
-from django.http import HttpResponse # new
+from django.http import HttpResponse    # new
 
 # Create your views here.
 
@@ -21,7 +21,6 @@ class AboutPageView(TemplateView):
         })
 
         return context
-
 
 class ContactPageView(TemplateView):
     template_name = 'contact.html'
