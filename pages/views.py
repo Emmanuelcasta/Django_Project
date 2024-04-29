@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.views import View
 from django  import forms
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 class HomePageView(TemplateView):
     template_name = 'pages/home.html'
@@ -69,10 +70,11 @@ class ProductShowView(View):
 class ProductForm(forms.Form):
     name = forms.CharField(required=True)
     price = forms.FloatField(required=True)
+    about = forms.CharField(required=True)
 
 
 class ProductCreateView(View):
-    template_name = 'products/create.html'
+    template_name = 'pages/products/create.html'
 
     def get(self, request):
         form = ProductForm()
@@ -84,13 +86,28 @@ class ProductCreateView(View):
     def post(self, request):
         form = ProductForm(request.POST)
         if form.is_valid():
+            # Extraer datos del formulario
+            name = form.cleaned_data['name']
+            price = form.cleaned_data['price']
+            about = form.cleaned_data['about']
+            # Crear un nuevo objeto de producto
+            new_product ={
+                "id": str(len(Product.products) + 1),
+                "name": name,
+                "price": price,
+                "about": about
+            } 
             
-            return redirect(form) 
+            
+            # Agrega otros campos si es necesario}
+            # Agregar el nuevo producto a la lista global de productos
+            Product.products.append(new_product)
+            messages.success(request, "Product created successfully")
+            
+            # Redirigir al usuario a la página de índice de productos
+            return redirect("form") 
         else:
             viewData = {}
             viewData["title"] = "Create product"
             viewData["form"] = form
             return render(request, self.template_name, viewData)
-   
-
-

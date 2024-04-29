@@ -17,11 +17,20 @@
                 {% endfor %}
                 </ul>
             {% endif %}
+            
 
             <form method="POST" action="{% url 'form' %}">
               {% csrf_token %}
+              {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-success">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
               <input type="text" class="form-control mb-2" placeholder="Enter name" name="name" value="{{form.data.name }}" />
               <input type="text" class="form-control mb-2" placeholder="Enter price" name="price" value="{{form.data.price }}" />
+              <input type="text" class="form-control mb-2" placeholder="Enter description" name="about" value="{{form.data.about }}" />
               <input type="submit" class="btn btn-primary" value="Send" />
             </form>
           </div>
